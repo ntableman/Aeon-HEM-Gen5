@@ -3,6 +3,7 @@
  *
  *  Copyright 2016 Dillon A. Miller
  *
+ *
  *  v0.8 of Aeon HEM Gen5(zwave plus) code, released 04/15/2016 for Aeotec Model zw095-a
  *  This Gen5 device handler is not backward compatible with the Aeon V1 or V2 device. If your model number is not zw095-a, don't use it.
  *
@@ -60,6 +61,8 @@
  *			Slightly adjusted the size of the tiles to fit all tiles into the App screen without scrolling.
  *			Further commented and cleaned up the code in preparation for submission to SmartThings as an official device handler.
  *			Submitted for consideration by SmartThings.
+ *		v0.9NET - 01/18/2020
+ *			Seems this has been stale for a while, so I am making it work with the Maker API in Hubitat and fixing a bunch of errors and adding fields.
  *
  *	To do:
  *		Features:
@@ -79,8 +82,8 @@ metadata {
 		capability "Configuration"
 		capability "Refresh"
 		capability "Sensor"
-        capability "Voltage Measurement"
-        attribute "current", "number"
+                capability "Voltage Measurement"
+                attribute "current", "number"
 		command "reset"
 		fingerprint deviceId: "0x3101", inClusters: "0x98"
 		fingerprint inClusters: "0x5E,0x86,0x72,0x32,0x56,0x60,0x70,0x59,0x85,0x7A,0x73,0xEF,0x5A", outClusters: "0x82"
@@ -96,7 +99,7 @@ metadata {
 			status "energy  ${i} kWh":
 			new hubitat.zwave.Zwave().meterV3.meterReport(scaledMeterValue: i, precision: 3, meterType: 1, scale: 0, size: 4).incomingMessage()
 		}
-        for (int i = 0; i <= 100; i += 1) {
+                for (int i = 0; i <= 100; i += 1) {
 			status "current  ${i} A":
 			new hubitat.zwave.Zwave().meterV3.meterReport(scaledMeterValue: i, precision: 3, meterType: 1, scale: 5, size: 4).incomingMessage()
 		}
